@@ -1,4 +1,4 @@
-# School-Projects
+# School Projects
 
 Welcome to my school working repository!
 
