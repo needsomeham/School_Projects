@@ -1,0 +1,8 @@
+Gorilla v Neanderthal
+Score: 2191
+
+Edits that need to be made: 
+_ >= c
+a = a
+a >= t
+None

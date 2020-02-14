@@ -1,0 +1,23 @@
+A histogram of the number of edits vs the count of word pairs of that edit:
+1 edits with 3245 words
+2 edits with 1143 words
+3 edits with 95 words
+4 edits with 24 words
+5 edits with 4 words
+6 edits with 4 words
+7 edits with 1 words
+8 edits with 1 words
+9 edits with 0 words
+10 edits with 0 words
+11 edits with 1 words
+12 edits with 0 words
+13 edits with 0 words
+14 edits with 0 words
+15 edits with 0 words
+16 edits with 0 words
+17 edits with 0 words
+18 edits with 0 words
+19 edits with 0 words
+20 edits with 0 words
+The word pairs with the largest pair were:
+unconfortability and discomfort with 11 edits

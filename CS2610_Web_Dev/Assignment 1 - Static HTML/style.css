@@ -1,0 +1,76 @@
+
+body {
+    background-color: #15adff;
+    font-family: Times;
+    font-style: inherit;
+}
+
+title {
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    margin: auto;
+    padding: 20%;
+}
+
+header {
+    text-align: center;
+
+}
+
+img {
+    max-width: 80%;
+    display: block;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+H1{
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+<!---->
+
+#Jerry{
+    text-decoration: underline;
+}
+
+.bacgroundWhite{
+    background-color: white;
+}
+
+.nomargin {
+    margin: 0;
+}
+
+.nosidemargin{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.nobottommargin{
+    margin-bottom: 0;
+}
+
+.notopmargin {
+    margin-top: 0;
+}
+
+.noborder {
+    border: 0;
+}
+
+.nopadding {
+    padding: 0;
+}
+
+.whiteBoarder{
+    border-color: white;
+}
+
+
