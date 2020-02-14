@@ -1,6 +1,6 @@
-# school-projects
+# School-Projects
 
-Welcome to my school work repository!
+Welcome to my school working repository!
 
 For those of you who may look at my code to help with your assignment, good luck, im not responsable for your grade ;)
 
