@@ -9,24 +9,29 @@ def is_grashof(links: []):
         return True
     return False
 
+
 def to_degrees(angle_rad):
-    return (angle_rad*180)/math.pi
+    return (angle_rad * 180) / math.pi
+
 
 def to_rad(angle_ang):
-    return (angle_ang*math.pi)/180
+    return (angle_ang * math.pi) / 180
 
-def distance(point1:[], point2:[]):
-    dist = math.sqrt( (point1[0] + point2[0])**2 + (point1[1] + point2[1])**2 )
+
+def distance(point1: [], point2: []):
+    dist = math.sqrt((point1[0] + point2[0]) ** 2 + (point1[1] + point2[1]) ** 2)
     return dist
 
-def is_in_box(point:[]):
+
+def is_in_box(point: []):
     if point[0] < - 5 or point[0] > 15:
         return False
     if point[1] > -10 or point[1] < -30:
         return False
     return True
 
-def find_vectors(var2,var3,alpha2,alpha3,delta2,delta3,p21,p31):
+
+def find_vectors(var2, var3, alpha2, alpha3, delta2=to_rad(-31.19), delta3=to_rad(-16.34), p21=2.798, p31=3.919):
     # Creating a simplified version for the linear algebra
     a = math.cos(var2) - 1
     b = math.sin(var2)
@@ -55,7 +60,7 @@ def find_vectors(var2,var3,alpha2,alpha3,delta2,delta3,p21,p31):
     try:
         if 0 == np.linalg.det(matrixA):
             # print("matrix is not invertable")
-            return 0,0,0,0
+            return 0, 0, 0, 0
     except:
         print("Matrix not invertable")
         # Probably put more information about what the user could fix to make sure its invertable
@@ -69,52 +74,54 @@ def find_vectors(var2,var3,alpha2,alpha3,delta2,delta3,p21,p31):
     zx = x[2]
     zy = x[3]
 
-
     return wx, wy, zx, zy
 
-def solve_problem1(pt1,pt2,pt3,beta2,beta3,gamma2,gamma3,thetaPt1,thetaPt2,thetaPt3):
 
+def solve_problem1(pt1, pt2, pt3, beta2, beta3, gamma2, gamma3):
     """Part A"""
     # Ignore red pivot points
-    #print("Part A, \nWe ignored pivot points\n")
+    # print("Part A, \nWe ignored pivot points\n")
 
     """Part B"""
     # Find p21, p31, del2, del3, alpha2, alpha3
 
-    #print("Part B")
+    # print("Part B")
     # Distance between point 1-2 and 1-3
-    p21 = distance(pt2,pt1)
-    p31 = distance(pt3,pt1)
-    #print(f'Distance from 1 to 2: {p21} units')
-    #print(f'Distance from 1 to 3: {p31} units')
+    #p21 = distance(pt2, pt1)
+    #p31 = distance(pt3, pt1)
+    # print(f'Distance from 1 to 2: {p21} units')
+    # print(f'Distance from 1 to 3: {p31} units')
 
     # Angles for delta2 and delta3
-    delta2 = math.atan2(pt2[1], pt2[0])
-    delta3 = math.atan2(pt3[1], pt3[0])
-    #print(f'Delta 2: {delta2} degreees')
-    #print(f'Delta 3: {delta3} degrees')
+    #delta2 = np.arctan2(pt2[1], pt2[0])
+    #delta3 = np.arctan2(pt3[1], pt3[0])
+    # print(f'Delta 2: {delta2} degreees')
+    # print(f'Delta 3: {delta3} degrees')
 
     # Solving for alpha 2 and 3
-    alpha2 = thetaPt2 - thetaPt1
-    alpha3 = thetaPt3 - thetaPt1
-    #print(f'Alpha 2: {to_degrees(alpha2)} degrees')
-    #print(f'Alpha 3: {to_degrees(alpha3)} degrees')
+    # alpha2 = thetaPt1 - thetaPt2
+    # alpha3 = thetaPt1 - thetaPt3
 
-    #print()
+    """"""
+    alpha2 = to_rad(-45)
+    alpha3 = to_rad(9.3)
+    ''''''
+    # print(f'Alpha 2: {to_degrees(alpha2)} degrees')
+    # print(f'Alpha 3: {to_degrees(alpha3)} degrees')
 
+    # print()
 
     """Part C and D"""
     # Find beta2, beta3, gamma2, gamma3
     # Find vectors W Z U S
-    #print('Part C')
-    #print(f'Beta 2: {beta2} degrees')
-    #print(f'Beta 3: {beta3} degrees')
-    #print(f'Gamma 2: {gamma2} degrees')
-    #print(f'Gamma 3: {gamma3} degrees')
+    # print('Part C')
+    # print(f'Beta 2: {beta2} degrees')
+    # print(f'Beta 3: {beta3} degrees')
+    # print(f'Gamma 2: {gamma2} degrees')
+    # print(f'Gamma 3: {gamma3} degrees')
 
-
-    Wx, Wy, Zx, Zy = find_vectors(beta2,beta3,alpha2,alpha3,delta2,delta3,p21,p31)
-    Ux, Uy, Sx, Sy = find_vectors(gamma2,gamma3,alpha2,alpha3,delta2,delta3,p21,p31)
+    Wx, Wy, Zx, Zy = find_vectors(beta2, beta3, alpha2, alpha3)
+    Ux, Uy, Sx, Sy = find_vectors(gamma2, gamma3, alpha2, alpha3)
 
     # Finding the length of vector u and s
     W = math.sqrt(Wx ** 2 + Wy ** 2)
@@ -122,27 +129,26 @@ def solve_problem1(pt1,pt2,pt3,beta2,beta3,gamma2,gamma3,thetaPt1,thetaPt2,theta
     U = math.sqrt(Ux ** 2 + Uy ** 2)
     S = math.sqrt(Sx ** 2 + Sy ** 2)
 
-    #print(f'Magnitude of W: {W} units')
-    #print(f'Magnitude of Z: {Z} units')
-    #print(f'Magnitude of U: {U} units')
-    #print(f'Magnitude of S: {S} units')
+    # print(f'Magnitude of W: {W} units')
+    # print(f'Magnitude of Z: {Z} units')
+    # print(f'Magnitude of U: {U} units')
+    # print(f'Magnitude of S: {S} units')
 
-    #print()
-
+    # print()
 
     """Part E"""
     # Find points A and B
     # TODO: Is it grashof?
-    #print('Part E')
+    # print('Part E')
 
-    #print('NOTE that A is the position of the vector head Z')
-    #print('NOTE that B is the position of the vector head S')
+    # print('NOTE that A is the position of the vector head Z')
+    # print('NOTE that B is the position of the vector head S')
 
     # Printing solution to W, Z, U, S in complex form
-    #print(f'Vector W in complex notation: {Wx}, {Wy}j units')
-    #print(f'Vector Z in complex notation: {Zx}, {Zy}j units')
-    #print(f'Vector U in complex notation: {Ux}, {Uy}j units')
-    #print(f'Vector S in complex notation: {Sx}, {Sy}j units')
+    # print(f'Vector W in complex notation: {Wx}, {Wy}j units')
+    # print(f'Vector Z in complex notation: {Zx}, {Zy}j units')
+    # print(f'Vector U in complex notation: {Ux}, {Uy}j units')
+    # print(f'Vector S in complex notation: {Sx}, {Sy}j units')
 
     # Solving for length of link V
     # Finding vector v which lies in between point A and point B
@@ -155,18 +161,18 @@ def solve_problem1(pt1,pt2,pt3,beta2,beta3,gamma2,gamma3,thetaPt1,thetaPt2,theta
     Gy = Wy - Uy + Vy
     G = math.sqrt(Gx ** 2 + Gy ** 2)
 
-    links = [W,U,V,G]
+    links = [W, U, V, G]
 
-    #print(f'Is the fourbar grashof? {is_grashof(links)}')
+    # print(f'Is the fourbar grashof? {is_grashof(links)}')
 
     # Finding points C and D
     C = [-Zx - Wx, -Zy - Wy]
     D = [-Sx - Ux, -Sy - Uy]
-    #print(C,' ',D)
+    # print(C,' ',D)
 
-    #print('Are base points C and D in the box?')
-    #print(f'    C is in box: {is_in_box(C)}')
-    #print(f'    D is in box: {is_in_box(D)}')
+    # print('Are base points C and D in the box?')
+    # print(f'    C is in box: {is_in_box(C)}')
+    # print(f'    D is in box: {is_in_box(D)}')
 
     return is_in_box(C), is_in_box(D)
 
@@ -180,37 +186,41 @@ if __name__ == '__main__':
     pt3 = [25, -20]
 
     # Angles for point 1
-    thetaPt1 = math.pi / 2
-    thetaPt2 = math.pi / 4
-    thetaPt3 = 0
+    # thetaPt1 = math.pi / 2
+    # thetaPt2 = math.pi / 4
+    # thetaPt3 = 0
 
     # Picking betas and gammas for part c and e
 
-    possible_solutions = []
-    for i in range(1,360):
-        for j in range(1,360):
-            i = to_rad(i)
-            j = to_rad(j)
-            beta2 = i
-            gamma2 = i
-            beta3 = j
-            gamma3 = j
-            loc1, loc2 = solve_problem1(pt1,pt2,pt3,beta2,beta3,gamma2,gamma3,thetaPt1,thetaPt2,thetaPt3)
-            if loc1 and loc2:
-                possible_solutions.append([i,j])
-
-    f = open('solutions.txt','w')
-    f.truncate(0)
-    for line in possible_solutions:
-        f.write(f'{line}\n')
-    f.close()
-    print(possible_solutions)
+    # possible_solutions = []
+    # for i in range(1,360):
+    #     for j in range(1,360):
+    #         i = to_rad(i)
+    #         j = to_rad(j)
+    #         beta2 = i
+    #         gamma2 = i
+    #         beta3 = j
+    #         gamma3 = j
+    #         loc1, loc2 = solve_problem1(pt1,pt2,pt3,beta2,beta3,gamma2,gamma3,thetaPt1,thetaPt2,thetaPt3)
+    #         if loc1 and loc2:
+    #             possible_solutions.append([i,j])
+    #
+    # f = open('solutions.txt','w')
+    # for line in possible_solutions:
+    #     f.write(f'{line}')
+    # f.close()
+    # print(possible_solutions)
 
     # beta2 = -to_rad(50)
     # beta3 = -to_rad(85)
     # gamma2 = -to_rad(55)
     # gamma3 = -to_rad(65)
-    # loc1, loc2 = solve_problem1(pt1,pt2,pt3,beta2,beta3,gamma2,gamma3,thetaPt1,thetaPt2,thetaPt3)
-    #
-    # print('im doing what im supposed to')
-    # print(loc1,loc2)
+
+    beta2 = to_rad(342.3)
+    beta3 = to_rad(324.8)
+    gamma2 = to_rad(30.9)
+    gamma3 = to_rad(80.6)
+
+    loc1, loc2 = solve_problem1(pt1, pt2, pt3, beta2, beta3, gamma2, gamma3)
+
+    print(loc1, loc2)
