@@ -4,34 +4,53 @@ import matplotlib.pyplot as plt
 import time
 import random
 
-def buffer(x):
-    #finds the smallest power of 2 that is larger than the len(x)
+# Small function to ensure that the string is of length 2^something
+# If not, pad the end till it is
+def addPadding(x):
+    # Finds the smallest power of 2 that is larger than the len(x)
     power = 0
     while 2**power < len(x):
         power +=1
     if len(x) == 2**power:
         return x
 
+    # Creating new string and padding it
     fullX = [0 for i in range(2**power)]
     for i in range(len(x)):
         fullX[i] = x[i]
     return fullX
 
+
 # A helper function to kick off the recursive FFT function
 def FFThelper(x):
-    finalX = buffer(x)
+    finalX = addPadding(x)
     answer = FFT(finalX,len(finalX))
     return answer
 
+
+# Main FFT function
+# Based off of the Cooley and Tukey exploitation of the discrete Fourier Transform
+# Works based on symmetry in the function to exploti the fact that you can split even and odd parts of the function
+# based on a small algebraic trick. Basically without the algebra the function is O(n^2), but with the trick
+# it becomes O(nlogn + n) but the final +n falls off.
+# You could also get rid of the the passed N and just take the size of the array on the first step reducing the need
+# for a recursive kick off function.
+# Based on: https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
 def FFT(x:[],N:int):
+    # Base case
     if N <= 1:
         return x
 
     else:
+        # Splitting the lists into even and odd bins
         listEven = FFT(x[::2], int(N/2))
         listOdd = FFT(x[1::2], int(N/2))
+
+        # Making an array for to hold the solution
         ans = [0 for i in range(N)]
 
+        # Populating the array where one half of the complex conjugate goes in the first position while the second half
+        # goes in the N/2 th position.
         for k in range(int(N/2)):
             ans[k] = listEven[k] + cmath.exp(-2j*cmath.pi*k/N)*listOdd[k]
             ans[k+int(N/2)] = listEven[k] - cmath.exp(-2j*cmath.pi*k/N)*listOdd[k]
@@ -66,13 +85,17 @@ def graphTimes(powers:[],studentTimes:[],numpyTimes:[]):
 
 
 if __name__ == '__main__':
+    # Some containers to hold the data
     pows = []
     timeNumpy = []
     timeMyFFT = []
 
-    #making the timing sequence
-    for pow in range(25):
-        print(pow)
+    # Largest power user would like to run to
+    largestPow = 24
+
+    # Timing various lengths of strings
+    for pow in range(largestPow + 1):
+        print(f'Working on string length of 2^{pow}')
 
         # Generating a randomly filled array
         FFTthis = [random.randint(0,50) for i in range(2**pow)]
