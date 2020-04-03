@@ -98,8 +98,8 @@ def FFT(x:[],N:int, isInverse:bool):
 
         # Easy way to split the code based on if its the inverse or not
         for k in range(int(N/2)):
-            ans[k] = listEven[k] + cmath.exp(-2j*cmath.pi*k/N)*listOdd[k]
-            ans[k+int(N/2)] = listEven[k] - (direction)*cmath.exp(-2j*cmath.pi*k/N)*listOdd[k]
+            ans[k] = listEven[k] + cmath.exp(-2j*cmath.pi*k*direction/N)*listOdd[k]
+            ans[k+int(N/2)] = listEven[k] - cmath.exp(-2j*cmath.pi*k*direction/N)*listOdd[k]
         return ans
 
 
