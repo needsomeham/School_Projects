@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jack's Tech Tips</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" href="/favicon.ico"/>
+
+</head>
+<body>
+<h1>Jack's useful cheats and hints to using Bash, Git, HTML and CSS</h1>
+<h1 class="bacgroundWhite nosidemargin">Bash Tips</h1>
+
+<H2>Bash commands</H2>
+<p class="nobottommargin">Some useful Bash commands:</p>
+<ul class="notopmargin">
+    <li>ls - List Directory</li>
+    <li>cd - change directory</li>
+    <li>mkdir - make a directory</li>
+    <li>touch - create a fie</li>
+    <li>echo - print text to the terminal window</li>
+    <li>pwd - print working directory</li>
+</ul>
+
+<p>An example using the ls directory:</p>
+<pre>
+    $ cd ..
+</pre>
+<p>This will take you to the parent directory.</p>
+
+
+<h1 class="bacgroundWhite nosidemargin">Git Tips</h1>
+
+<h2 class="whiteBoarder">Git commands</h2>
+<p class="nobottommargin">Some useful Git commands:</p>
+<ul class="notopmargin">
+    <li>-git commit -a -m "info about commit"  ~tell git to commit all files in directory with message in quotes</li>
+    <li>-git status ~ask git about the status of files in the directory</li>
+    <li>-git add . ~have git add all files in the directory</li>
+    <li>-git add {file} ~have git add a file</li>
+</ul>
+
+<p>An example of using the git status and what it might return:</p>
+<pre>
+    $ git status
+
+    On branch master
+    Your branch is ahead of 'origin/master' by 1 commit.
+    (use "git push" to publish your local commits)
+
+    Changes not staged for commit:
+    (use "git add &lt;file&gt;..." to update what will be committed)
+    (use "git restore &lt;file&gt;..." to discard changes in working directory)
+        modified:   .idea/workspace.xml
+        modified:   Tips.html
+
+        Untracked files:
+        (use "git add &lt;file&gt;..." to include in what will be committed)
+            Jack Sailing.jpg
+            Jack Shooting.jpg
+            Jack Drinking.html
+
+            no changes added to commit (use "git add" and/or "git commit -a")
+
+    $
+</pre>
+
+
+
+<h1 class="bacgroundWhite nosidemargin">HTML Tips</h1>
+
+<h2>HTML tags</h2>
+<p class="nobottommargin">Some useful HTML tags:</p>
+<ul class="notopmargin">
+    <li>title  -The title of the page</li>
+    <li>h1  -The largest default heading in HTML</li>
+    <li>h2  -The second largest heading in HTML</li>
+    <li>p  -A standard paragraph</li>
+    <li>code  -Defines a piece of computer code</li>
+    <li>xmp  -Allows exact sharing of code without running the HTML scripts</li>
+</ul>
+
+
+
+<h1>Lists</h1>
+<H2>Ordered List</H2>
+<p>An ordered list will look like:</p>
+<ol>
+    <li>First list element</li>
+    <li>Second list element</li>
+    <li>And so on..</li>
+</ol>
+
+<p>The code to produce this looks like:</p>
+<pre class="nomargin">
+    &lt;ol&gt;
+        &lt;li&gt;First list element&lt;/li&gt;
+        &lt;li&gt;Second list element&lt;/li&gt;
+        &lt;li&gt;And so on..&lt;/li&gt;
+    &lt;/ol&gt;
+</pre>
+
+
+<h2>Unordered List</h2>
+<p>An unordered list will look like:</p>
+<ul>
+    <li>First list element</li>
+    <li>Second list element</li>
+    <li>And so on..</li>
+</ul>
+<p>And the code to produce this looks like:</p>
+<pre>
+    &lt;ul&gt;
+        &lt;li&gt;First list element&lt;/li&gt;
+        &lt;li&gt;Second list element&lt;/li&gt;
+        &lt;li&gt;And so on..&lt;/li&gt;
+    &lt;/ul&gt;
+</pre>
+
+<h2>Hyperlinks</h2>
+<p>To hyperlink to a picture, use the "a" tag. The code to insert this picture looks like:</p>
+<pre>
+    &lt;a href="Jack%20Sparrow%20-%20lick.jpg"&gt;Jack Sparrow&lt;/a&gt;
+</pre>
+<a href="Jack%20Sparrow%20-%20lick.jpg">Jack Sparrow</a>
+
+
+<h1 class="bacgroundWhite nosidemargin">CSS Tips</h1>
+
+<h2>CSS concepts</h2>
+<p>Remember:</p>
+<ul>
+    <li>No HTML tags</li>
+    <li>All classes begin with a . ex, .noPadding</li>
+    <li>An ID tag is referenced via # </li>
+</ul>
+
+<p>An example of a css class:</p>
+<pre>
+    img {
+        max-width: 80%;
+        display: block;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</pre>
+
+<p></p>
+<p>To navigate back to Jack's main page click <a href="Index.html">here.</a></p>
+
+<p>To navigate to Jack's About Page click <a href="About.html">here.</a></p>
+
+</body>
+
+</html>

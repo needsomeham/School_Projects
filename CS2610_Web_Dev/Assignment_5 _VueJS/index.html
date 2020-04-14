@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Weather Forecast App</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<!-- empty div to hold the whole shabang -->
+<div id="app">
+
+<!-- div for the main heading -->
+<div class="stuff-box grey textBlack">
+    <h1 color="black">Vue.JS Weather App</h1>
+</div>
+
+
+<!-- div for the location -->
+<div class="stuff-box blue">
+    <h2>Your Location</h2>
+    <h2 v-if="typeof geoCoords === 'undefined'">Finding your Location</h2>
+    <p v-else>You are located in {{ geoCoords['city'] }}, {{ geoCoords['region_name'] }}, {{ geoCoords['country_name'] }} at coordinates ({{ geoCoords['latitude'] }},{{ geoCoords['longitude'] }})</p>
+</div>
+
+
+<!-- div for the current conditions -->
+<div id="currentConditions" class="stuff-box yellow">
+    <h2>Current Conditions</h2>
+    <p>Current weather conditions @ {{ dateTime }}</p>
+    <h2 v-if="typeof currentWeather === 'undefined'">Finding your Current Conditions</h2>
+    <ul v-else style="list-style-type:none;">
+        <li>Current Temperature: {{ currentWeather['main']['temp'] }} F</li>
+        <li>Feels like: {{ currentWeather['main']['feels_like'] }} F</li>
+        <li>Today's Max: {{ currentWeather['main']['temp_max'] }} F</li>
+        <li>Today's Min: {{ currentWeather['main']['temp_min'] }} F</li>
+        <li>Humidity: {{ currentWeather['main']['humidity'] }}%</li>
+    </ul>
+
+</div>
+
+<!-- div as container for each of future conditions -->
+<div class="stuff-box black">
+    <h2 v-if="typeof weatherIndex === 'undefined'">Finding your Forecast</h2>
+    <h2 v-else>5 day 3-hour forecast</h2>
+    <p> {{ unlikely }} unlikely {{ neutral }} neutral {{ likely }} likely</p>
+    <div v-for="(forecast, idx) in weatherIndex['list']"
+         v-bind:class="forecast.probability"
+         v-bind:data-index="idx"
+         v-on:click="toggle"
+    >
+        <h3>Predicted conditions for {{ forecast['dt_txt'] }}</h3>
+        <ul style="list-style-type:none;">
+            <li>Temperature: {{ forecast['main']['temp'] }} F</li>
+            <li>Conditions: {{ forecast['weather'][0]['description'] }}</li>
+            <li>Humidity: {{ forecast['main']['humidity'] }}%</li>
+            <li>Atmospheric Pressure: {{ forecast['main']['pressure'] }} hPa</li>
+
+        </ul>
+    </div>
+</div>
+
+</div>
+
+
+<script>
+
+    var app = new Vue({
+        el: '#app',
+
+        data: {
+            // Overhead
+            title: "Vue.js Weather App",
+            dateTime: undefined,
+
+            // KEYs
+            location_API_KEY: 'a745f3352534830d43d25d34628f9236',
+            weather_API_KEY: '1e33e075f12277b45752bc649bcdfcf9',
+
+            // Data for fetch
+            currentIP: undefined,
+            geoCoords: undefined,
+            currentWeather: undefined,
+            weatherIndex: undefined,
+
+            unlikely: 0,
+            neutral: 40,
+            likely: 0,
+
+
+            // For the future forecast
+            // num_unlikely: undefined,
+            // num_neutral: undefined,
+            // num_likely: undefined,
+
+        },
+
+        methods: {
+            toggle(ev) {
+                // The idea is if you to switch between the three states you can click on
+                // Not very elegant lul
+
+                let i = ev.currentTarget;
+
+                console.log(i.getAttribute('class'));
+                console.log(i);
+
+                if (i.getAttribute('class') == "unlikely"){
+                    i.setAttribute('class','neutral');
+                    i.probability = 'neutral';
+                    this.unlikely -=1;
+                    this.neutral +=1;
+                }
+                else if (i.getAttribute('class') == "neutral"){
+                    i.setAttribute('class','likely');
+                    i.probability = 'likely';
+                    this.neutral -=1;
+                    this.likely +=1;
+                }
+                else if (i.getAttribute('class') == "likely") {
+                    i.setAttribute('class','unlikely');
+                    i.probability = 'unlikely';
+                    this.likely -=1;
+                    this.unlikely +=1;
+                }
+                else {
+                    console.log('sup')
+                }
+
+            },
+
+        },
+
+        created() {
+            // Fetching the current IP
+            console.log("retrieving location data");
+            var get_IP = fetch("http://api.ipify.org?format=json")
+                .then(response => response.json())
+                .then(json => this.currentIP = json['ip']);
+
+            // I was going to call the weather based on the IP, but this does it for me :)
+            fetch(`http://api.ipstack.com/check?access_key=${this.location_API_KEY}`)
+                .then(response => response.json())
+                .then(json => {this.geoCoords = json;
+                return fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${json['latitude']}&lon=${json['longitude']}&appid=${this.weather_API_KEY}&units=imperial`);
+                })
+                .then(response => response.json())
+                .then(json => {this.currentWeather = json;
+                return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${this.geoCoords['latitude']}&lon=${this.geoCoords['longitude']}&appid=${this.weather_API_KEY}&units=imperial`);
+                })
+                .then(response => response.json())
+                .then(json => {
+                    this.weatherIndex = json;
+
+                    for (let i = 0; i < this.weatherIndex['list'].length; i++) {
+                        this.weatherIndex['list'][i]['probability'] = "neutral"
+                    }
+                });
+
+
+            // Building current date time object
+            this.dateTime = new Date();
+
+        },
+
+        computed: {
+            num_neutral() {
+                let c = 0;
+                console.log(this.weatherIndex.list);
+                for (forecast of this.weatherIndex.list) {
+                    if (forecast.probability == 'neutral') {
+                        c++;
+                    }
+                }
+                return c;
+            },
+
+            num_unlikely() {
+                let c = 0;
+                for (forecast of this.weatherIndex.list) {
+                    if (forecast.probability == 'unlikely') {
+                        c++;
+                    }
+                }
+                return c;
+            },
+
+            num_likely() {
+                let c = 0;
+                for (forecast of this.weatherIndex.list) {
+                    if (forecast.probability == 'likely') {
+                        c++;
+                    }
+                }
+                return c;
+            },
+
+        },
+
+    })
+
+
+
+</script>
+
+</body>
+</html>
